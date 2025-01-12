@@ -11,16 +11,6 @@ void printMatrix(int matrix[][100], int M, int N) {
     }
 }
 
-// Matris yazma fonksiyonu
-void printmatris(int matrix[][100], int M, int N) {
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            printf("%d ", matrix[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 void konvolusyon(int G[][100], int M, int N, int F[][100], int k, int R[][100]) {
     int filtop = 0;
 
@@ -60,19 +50,18 @@ int main() {
     int sonuc[50][50];
 
     // Matrisin satir ve sutun sayilarini giriyoruz
-inputn:
-    printf("Matrisin satir sayisini girin (M): ");
-    if (scanf("%d", &M) != 1 || M <= 0) {
+    while (1) {
+        printf("Matrisin satir sayisini girin (M): ");
+        if (scanf("%d", &M) == 1 && M > 0 && M <= 100) break;
         while (getchar() != '\n');
-        printf("Hata: Lutfen bir tam sayi giriniz.\n");
-        goto inputn;
+        printf("Hata: Lutfen 1 ile 100 arasinda bir tam sayi giriniz.\n");
     }
 
-    printf("Matrisin sutun sayisini girin (N): ");
-    if (scanf("%d", &N) != 1 || N <= 0) {
+    while (1) {
+        printf("Matrisin sutun sayisini girin (N): ");
+        if (scanf("%d", &N) == 1 && N > 0 && N <= 100) break;
         while (getchar() != '\n');
-        printf("Hata: Lutfen bir tam sayi giriniz.\n");
-        goto inputn;
+        printf("Hata: Lutfen 1 ile 100 arasinda bir tam sayi giriniz.\n");
     }
 
     printf("Girdiginiz degerler: M = %d, N = %d\n", M, N);
@@ -88,18 +77,14 @@ inputn:
     printf("Ana matris:\n");
     printMatrix(matris, M, N);
 
-inputf:
-    printf("Filtre boyutunu girin (NxN): ");
-    if (scanf("%d", &n) != 1) {
+    while (1) {
+        printf("Filtre boyutunu girin (NxN): ");
+        if (scanf("%d", &n) == 1 && n > 0 && n <= M && n <= N) break;
         while (getchar() != '\n');
-        printf("Hata: Lutfen bir tam sayi giriniz.\n");
-        goto inputf;
-    } else if (n > M || n > N) {
-        printf("Hata: Lutfen en az ana matrisin satir veya sütun sayilarina esit deger giriniz.\n");
-        goto inputf;
-    } else {
-        printf("Girdiginiz deger: %d\n", n);
+        printf("Hata: Lutfen 1 ile %d arasinda bir tam sayi giriniz.\n", M < N ? M : N);
     }
+
+    printf("Girdiginiz deger: %d\n", n);
 
     // Filtre matrisinin degerlerini istiyoruz
     printf("Filtre matrisi degerlerini girin:\n");
@@ -110,7 +95,7 @@ inputf:
     }
 
     printf("Filtre matrisi:\n");
-    printmatris(filter, n, n);
+    printMatrix(filter, n, n);
 
     // Konvolüsyon islemini gerceklestir
     konvolusyon(matris, M, N, filter, n, sonuc);
